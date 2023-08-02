@@ -9,14 +9,21 @@ import * as styles from "../components/index.module.css"
 const Title = styled.h1`
   display: inline-block;
 `
+const BlogTitle = styled.h3`
+  margin-bottom: 20px;
+  &:hover {
+    color: #1dcaff;
+  }
+`
 const BlogLink = styled(Link)`
   text-decoration: none;
   color: inherit;
 `
-const BlogTitle = styled.h3`
-  margin-bottom: 20px;
-  color: blue;
+
+const BlogBody = styled.div`
+  margin-bottom: 50px;
 `
+
 const links = [
   {
     text: "Tutorial",
@@ -44,41 +51,41 @@ const links = [
   },
 ]
 
-const samplePageLinks = [
-  {
-    text: "Page 2",
-    url: "page-2",
-    badge: false,
-    description:
-      "A simple example of linking to another page within a Gatsby site",
-  },
-  { text: "TypeScript", url: "using-typescript" },
-  { text: "Server Side Rendering", url: "using-ssr" },
-  { text: "Deferred Static Generation", url: "using-dsg" },
-]
+// const samplePageLinks = [
+//   {
+//     text: "Page 2",
+//     url: "page-2",
+//     badge: false,
+//     description:
+//       "A simple example of linking to another page within a Gatsby site",
+//   },
+//   { text: "TypeScript", url: "using-typescript" },
+//   { text: "Server Side Rendering", url: "using-ssr" },
+//   { text: "Deferred Static Generation", url: "using-dsg" },
+// ]
 
-const moreLinks = [
-  { text: "Join us on Discord", url: "https://gatsby.dev/discord" },
-  {
-    text: "Documentation",
-    url: "https://gatsbyjs.com/docs/",
-  },
-  {
-    text: "Starters",
-    url: "https://gatsbyjs.com/starters/",
-  },
-  {
-    text: "Showcase",
-    url: "https://gatsbyjs.com/showcase/",
-  },
-  {
-    text: "Contributing",
-    url: "https://www.gatsbyjs.com/contributing/",
-  },
-  { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
-]
+// const moreLinks = [
+//   { text: "Join us on Discord", url: "https://gatsby.dev/discord" },
+//   {
+//     text: "Documentation",
+//     url: "https://gatsbyjs.com/docs/",
+//   },
+//   {
+//     text: "Starters",
+//     url: "https://gatsbyjs.com/starters/",
+//   },
+//   {
+//     text: "Showcase",
+//     url: "https://gatsbyjs.com/showcase/",
+//   },
+//   {
+//     text: "Contributing",
+//     url: "https://www.gatsbyjs.com/contributing/",
+//   },
+//   { text: "Issues", url: "https://github.com/gatsbyjs/gatsby/issues" },
+// ]
 
-const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
+// const utmParameters = `?utm_source=starter&utm_medium=start-page&utm_campaign=default-starter`
 
 const IndexPage = ({ data }) => {
   console.log(data)
@@ -89,14 +96,16 @@ const IndexPage = ({ data }) => {
         <h4>{data.allMarkdownRemark.totalCount}</h4>
         {data.allMarkdownRemark.edges.map(({ node }) => (
           <div key={node.id}>
-            <BlogLink to={node.fields.slug}>
-              <BlogTitle>
-                <span>
-                  {node.frontmatter.title}-{node.frontmatter.date}
-                </span>
-              </BlogTitle>
-            </BlogLink>
-            <p>{node.excerpt}</p>
+            <BlogBody key={node.id}>
+              <BlogLink to={node.fields.slug}>
+                <BlogTitle>
+                  <span>
+                    {node.frontmatter.title}-{node.frontmatter.date}
+                  </span>
+                </BlogTitle>
+              </BlogLink>
+              <p>{node.excerpt}</p>
+            </BlogBody>
           </div>
         ))}
       </div>
@@ -128,6 +137,7 @@ export const query = graphql`
           fields {
             slug
           }
+          excerpt(truncate: true)
         }
       }
     }

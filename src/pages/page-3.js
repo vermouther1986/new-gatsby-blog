@@ -12,4 +12,4 @@ const ThirdPage = () => (
 
 export const Head = () => <Seo title="Page two" />
 
-export default SecondPage
+export default ThirdPage
